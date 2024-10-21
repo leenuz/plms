@@ -1740,3 +1740,43 @@ div.dt-filter-spacer {
   .selectTitle {
   margin-bottom: 12px;
 }
+
+/* 현황 통계 - 발생연월 [S] */
+.issueTotalSectionContDevide .selectMonth {
+    width: 203px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #cfddf2;
+    position: relative;
+    /* background: url(/assets/media/menu02/images/calendarInputIcon.png) no-repeat left 8px center; */ /*달력 아이콘*/
+    background-size: 18px;
+}
+
+.issueTotalSectionContDevide input[type="month"] {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: transparent;
+    background: transparent;
+    text-align: right;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.issueTotalSectionContDevide input[type="month"]:focus, .issueTotalSectionContDevide input[type="month"]:valid {
+    color: #6e7d88;
+}
+/* 
+크롬, 사파리 등 WebKit 브라우저에서 input type=month의 아이콘 숨기기
+.issueTotalSectionContDevide input[type="month"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+파이어폭스에서 input type=month의 아이콘 숨기기
+.issueTotalSectionContDevide input[type="month"]::-moz-calendar-picker-indicator {
+    display: none;
+}
+ */

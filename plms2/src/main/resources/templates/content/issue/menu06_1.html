@@ -539,6 +539,7 @@ table.dataTable thead th.dt-orderable-none {
 	<!-- 추가, 검색결과 (토지상태) -->
 	<div class="issueManageLandStatusPopWrapper"></div>
 	
+	<!-- 현황 통계 [S] -->
 	<link rel="stylesheet" href="/assets/css/popup/issueTotalPop.css" />
 	<div id="issueTotalPopContent">
 		<div class="issueTotalPopWrap">
@@ -593,8 +594,10 @@ table.dataTable thead th.dt-orderable-none {
 					<ul class="selectContent sectionMenuListBoxs">
 						<li class="selectTitle"><p>발생연월</p></li>
 						<!--수정부분 지사-->
-						<div class="selectWrappers">
-							<select name="" class="issueTotalHiddenSelect"
+						<div class="selectWrappers selectMonth" id="selectMonth">
+							<!-- input type="month"로 변경 -->
+        			<input type="month" id="issueTotalHiddenSelectBox03" />
+							<!-- <select name="" class="issueTotalHiddenSelect"
 								id="issueTotalHiddenSelectBox03" multiple="multiple" hidden>
 								<option value="전체">전체</option>
 								<option value="1월">1월</option>
@@ -609,15 +612,15 @@ table.dataTable thead th.dt-orderable-none {
 								<option value="10월">10월</option>
 								<option value="11월">11월</option>
 								<option value="12월">12월</option>
-							</select>
+							</select> -->
 						</div>
 						<!--보여지는 셀렉박스-->
-						<div class="surfaceSelects">
+						<!-- <div class="surfaceSelects">
 							<button class="issueTotalSelectsTitleBtn"></button>
 							<div class="sufaceSelectList">
 								<ul class="surfaceSelectListMember selectChoice"></ul>
 							</div>
-						</div>
+						</div> -->
 					</ul>
 				</div>
 				<div class="issueTotalDataWrapper">
@@ -701,14 +704,12 @@ table.dataTable thead th.dt-orderable-none {
 								<li><p>0</p></li>
 							</ul>
 						</div>
-
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
+	<!-- 현황 통계 [E] -->
 	
 	
 	<!-- 주소 검색 결과 팝업창 [S] -->

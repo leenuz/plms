@@ -343,9 +343,20 @@ const issueTotalSelectEvet = (reload = false) => {
 	});
 
 }
-
-
 issueTotalSelectEvet();
+
+/*
+// .selectMonth div 클릭 시 input[type="month"]의 focus 처리
+$(document).on('click', '#selectMonth', function() {
+    console.log("Select Month 클릭됨");
+    $('input[type=month]').trigger('click');  // trigger('click') 대신 focus() 사용
+});
+*/
+// input type=month의 change 이벤트로 처리
+$(document).on('change', '#issueTotalHiddenSelectBox03', function() {
+    // 월 선택 시 바로 조회 실행
+    selectMinwonStatusStatis(false);
+});
 
 
 /* 체크박스 함수 */
@@ -1029,7 +1040,8 @@ function selectMinwonStatusStatis(isAll = true) {
 		jisa = $(".issueTotalSelectsTitleBtn").eq(0).text() == "전체" ? "" : $(".issueTotalSelectsTitleBtn").eq(0).text();
 		let testValue = ($("#issueTotalHiddenSelectBox02").val()[0]);	//findProgStatus($("#issueTotalHiddenSelectBox02").val()[0])
 		status = $("#issueTotalHiddenSelectBox02").val()[0] == "전체" ? "" : testValue; 
-		occur_date = $("#issueTotalHiddenSelectBox03").val()[0] == "전체" ? "" : $("#issueTotalHiddenSelectBox03").val()[0];
+		//occur_date = $("#issueTotalHiddenSelectBox03").val()[0] == "전체" ? "" : $("#issueTotalHiddenSelectBox03").val()[0];
+		occur_date = $("#issueTotalHiddenSelectBox03").val();
 	}
 
 	var allData = { "jisa": jisa, "status": status, "occur_date": occur_date };
