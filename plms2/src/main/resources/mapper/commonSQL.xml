@@ -816,6 +816,7 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
 		, A.juso
 		, A.jijuk_status
 		, A.jisang_no
+		, A.jijuk_area
 	FROM jijuk_2024 A
 	WHERE A.sido_nm = #{SELECT_SIDO}
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_SIGUNGU)" >
