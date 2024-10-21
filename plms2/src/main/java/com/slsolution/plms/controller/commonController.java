@@ -359,6 +359,13 @@ public class commonController {
 			resultObj.put("menuList", menuList);
 			resultObj.put("menu2pms", menu2pmsList);
 			
+			//2024-10-21 session 시간 받아오기
+			session.getMaxInactiveInterval();
+			int sessionTime = getSessionRemain(request);
+			resultObj.put("sessionTime", sessionTime);
+			//2024-10-21 session 시간 받아오기
+			
+			
 			response.setCharacterEncoding("UTF-8");
 	        response.setHeader("Access-Control-Allow-Origin", "*");
 	        response.setHeader("Cache-Control", "no-cache");
@@ -386,6 +393,31 @@ public class commonController {
 		}
 	}
 	
+	//2024-10-21 session -----------------------------------------------------------------------------------------------------
+	@PostMapping("/sessionExtension")
+	public void extensionSession(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("extensionTime", System.currentTimeMillis() + session.getMaxInactiveInterval() * 1000);
+	}
+	
+	@PostMapping("/getSessionRemain")
+	public int getSessionRemain(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		long current = System.currentTimeMillis();
+		Long extension = (Long) session.getAttribute("extensionTime");
+		Long remianTime = extension;
+		int count = 0;
+		try {
+			count = (int) ((remianTime - current) / 1000);
+			if (count == 0) {
+				session.invalidate();
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	//2024-10-21 session -----------------------------------------------------------------------------------------------------
 	
 	//Post맵핑
 	@PostMapping(path="/addressSearchSido")

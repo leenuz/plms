@@ -959,9 +959,6 @@ $(document).ready(function () {
         dataObj.modifyReason1 = modifyReason1;
         dataObj.modifyReason2 = modifyReason2;
         dataObj.modifyReason3 = modifyReason3;
-        console.log(dataObj);
-        
-        
         // 서버 전송
          url = "/land/songyu/insertSonguList";
          $.ajax({
@@ -977,11 +974,13 @@ $(document).ready(function () {
              },
              success: function (response) {
                  loadingHide();
-                 console.log(response);
+                 
 			    if (window.name == 'minwonCompletePopup') {
 	                window.opener.popupComplete();
 		            window.close();
-			    }
+			    } else {
+					alert('정상적으로 수정 되었습니다.');
+				}
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
         //             console.log("response.resultData length:" + response.resultData.length);
@@ -1151,7 +1150,7 @@ function compareChanges(orgValue, newValue, fieldName) {
 }
 
 $(document).on("click", "#addressResultSelectBtn", function () {
-    console.log("----------addressResultSelectBtn-click22222-------");
+    console.log("----------addressResultSelectBtn-click-------");
     console.log($(this).parent().parent().html());
     var pnu = $(this).parent().parent().find(".popContent01").html();
     var address = $(this).parent().parent().find(".popContent02").html();
