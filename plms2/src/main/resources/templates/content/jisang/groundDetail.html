@@ -16,6 +16,17 @@
 <!-- <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 
 <title>지상권</title>
+
+<style>
+		@media print {
+			.contWrap {
+				display: block;
+			}
+			.contWrap > div {
+				width: 100%
+			}
+		}
+	</style>
 </head>
 <th:block layout:fragment="content">
 
@@ -755,7 +766,7 @@
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn finalBtn" onclick="history.back();">이전</button>
 				<button class="printBtn finalBtn"
-					onClick="printDivContent('#groundDetail');">출력</button>
+					onClick="commonCurrentPagePrint('#groundDetail');">출력</button>
 			</div>
 		</main>
 	</div>

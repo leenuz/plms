@@ -7,10 +7,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link th:href="@{/css/common.css}" rel="stylesheet" />
 	<script src="/js/common/common.js"></script>
-	
 	<title>회사토지 상세정보</title>
 	<link rel="stylesheet" href="/css/dopco/companyLandDetails.css">
 	<title>지상권</title>
+	<style>
+		@media print {
+			.contWrap {
+				display: block;
+			}
+			.contWrap > div {
+				width: 100%
+			}
+		}
+	</style>
 </head>
 
 <th:block layout:fragment="content">
@@ -18,7 +27,11 @@
 	<!-- 241009 -->
 	<input type="hidden" id="jijukCoordList" th:value="${jijukCoordList}">
 	<input type="hidden" id="jijukCoordSize" th:value="${jijukCoordSize}">
-	<input type="hidden" id="detila_pnu" th:value="${data.pnu}">
+	<input type="hidden" id="detail_pnu" th:value="${data.pnu}">
+	<input type="hidden" id="detail_jibun" th:value="${data.jibun}">
+	<input type="hidden" id="detail_addrcode" th:value="${data.addrcode}">
+	<input type="hidden" id="detail_issue" th:value="${dopcoIssueList}">
+	
 	
 	<div class="companyLandDetailsWrappers">
 		<main id="companyLandDetails">
@@ -67,7 +80,6 @@
                   document.getElementById('mapFrame').src = mapUrl;
               </script>
           </div>
-
 					<!--기본 정보 -->
 					<div class="contBox contBoxMini02">
 						<div class="thirdTitle">
@@ -342,7 +354,7 @@
 			<section class="potentialIssues">
 				<div class="subTitle">
 					잠재이슈
-					<button class="issueAdd issuePopBtn">이슈등록</button>
+					<button class="issueAdd issuePopBtn" id="issueAddPopupBtn">이슈등록</button>
 				</div>
 				<div class="contWrap">
 					<div class="contBox contBox07">
@@ -374,10 +386,10 @@
 									<!-- 편집 -->
 									<li class="content04 content btnBox">
 										<div class="btnWrap">
-											<button class="editBtn miniBtn issueReviseBtn">수정</button>
+											<button class="editBtn miniBtn issueReviseBtn" id="issueReviseBtn">수정</button>
 										</div>
 										<div class="btnWrap">
-											<button class="delBtn miniBtn">삭제</button>
+											<button class="delBtn miniBtn" id="issueDeleteBtn">삭제</button>
 										</div>
 									</li>
 								</ul>
@@ -411,9 +423,9 @@
 								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList != null and dopcoIssueHistoryList.size() > 0}"
 								th:each="val, iterStat : ${dopcoIssueHistoryList}">
 									<li class="content01 content">[[${iterStat.count}]]</li><!-- 순번 -->
-									<li class="content02 content">[[${val.history_type}]]</li><!-- 구분 -->
-									<li class="content03 content">[[${val.history_date}]]</li><!-- 변경일자 -->
-									<li class="content04 content">[[${val.content}]]</li><!-- 내용 -->
+									<li class="content02 content">[[${val.pih_history_type}]]</li><!-- 구분 -->
+									<li class="content03 content">[[${val.pih_history_date}]]</li><!-- 변경일자 -->
+									<li class="content04 content">[[${val.pih_content}]]</li><!-- 내용 -->
 									<li class="content03 content">[[${val.issue_comment}]]</li><!-- 사유 -->
 								</ul>
 							</div>
@@ -604,12 +616,13 @@
 			<div class="finalBtnBox btnWrap">
 				<!-- 이전 버튼 추가 -->
 				<button class="backBtn finalBtn" onclick="history.back(-1)">이전</button>
-				<button class="printBtn finalBtn">출력</button>
+				<button class="printBtn finalBtn" onclick="commonCurrentPagePrint('companyLandDetails')">출력</button>
 			</div>
 		</main>
 	</div>
 	<div class="issueRegisterPopWrapper"></div>
 	<div class="issueRevisePopWrapper"></div>
+	<div class="issueDeletePopWrapper"></div>
 	<!-- script -->
 	<script src="/js/dopco/companyLandDetails.js"></script>
 	<script src="/js/dopco/potentialIssue.js"></script>
