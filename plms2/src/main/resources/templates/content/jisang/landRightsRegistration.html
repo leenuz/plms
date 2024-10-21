@@ -281,10 +281,13 @@
                         </div>
                         <div class="depth2">
                             <ul class="titles">
-                                <li class="title01">주소*</li>
-                                <li class="title02">주소 입력 선택 방식</li>
+                                <li class="title01" style="justify-content: center; align-items: center;">
+                                	<button class="SearchAddressBtn active landRightsSearchBtn" id="basicSearchBtn" style="width: 100px; height: 40px;">주소검색</button>
+                                </li>
+                                <li class="title02" style="background:white;">주소값</li>
                             </ul>
-                            <ul class="contents">
+                           
+                            <!-- <ul class="contents">
                                 <li class="content01"><input type="text" name="raddress" id="raddress" placeholder="" readonly class="notWriteInput">
                                 </li>
                                 <li class="content02">
@@ -302,7 +305,7 @@
 
                                             <div class="selectContentArea">
                                                 <div class="hiddenSelectBox">
-                                                    <!-- name도 추가 -->
+                                                    name도 추가
                                                     <select name="sido" id="landRightsRegistSelectBox09" hidden>
                                                         <option value="">전체</option>
                                                         <option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
@@ -311,13 +314,13 @@
                                                 <section class="customSelectBox">
                                                     <button class="customSelectView">전체</button>
                                                     <ul class="customSelectBtns" id="sido_ul">
-                                                        <!-- createCustomLiLandRegist() -->
+                                                        createCustomLiLandRegist()
                                                     </ul>
                                                 </section>
                                             </div>
                                             <div class="selectContentArea">
                                                 <div class="hiddenSelectBox">
-                                                    <!-- name도 추가 -->
+                                                    name도 추가
                                                     <select name="gugun" id="landRightsRegistSelectBox10" hidden>
                                                         <option value="">전체</option>
                                                     </select>
@@ -325,13 +328,13 @@
                                                 <section class="customSelectBox">
                                                     <button class="customSelectView">전체</button>
                                                     <ul class="customSelectBtns" id="gugun_ul">
-                                                        <!-- createCustomLiLandRegist() -->
+                                                        createCustomLiLandRegist()
                                                     </ul>
                                                 </section>
                                             </div>
                                             <div class="selectContentArea">
                                                 <div class="hiddenSelectBox">
-                                                    <!-- name도 추가 -->
+                                                    name도 추가
                                                     <select name="landRightsRegistSelectBox11" id="landRightsRegistSelectBox11" hidden>
                                                         <option value="">전체</option>
                                                     </select>
@@ -340,13 +343,13 @@
                                                     <button class="customSelectView">전체</button>
 
                                                     <ul class="customSelectBtns" id="dong_ul">
-                                                        <!-- createCustomLiLandRegist() -->
+                                                        createCustomLiLandRegist()
                                                     </ul>
                                                 </section>
                                             </div>
                                             <div class="selectContentArea">
                                                 <div class="hiddenSelectBox">
-                                                    <!-- name도 추가 -->
+                                                    name도 추가
                                                     <select name="landRightsRegistSelectBox12" id="landRightsRegistSelectBox12" hidden>
                                                         <option value="">전제</option>
                                                     </select>
@@ -355,7 +358,7 @@
                                                     <button class="customSelectView">전체</button>
 
                                                     <ul class="customSelectBtns" id="ri_ul">
-                                                        <!-- createCustomLiLandRegist() -->
+                                                        createCustomLiLandRegist()
                                                     </ul>
                                                 </section>
                                             </div> <input type="text" name="mjibun" placeholder="지번 입력">
@@ -364,9 +367,9 @@
                                     </ul>
                                     <div class="inputBtnArea">
                                     	 
-                                        <!-- <button class="SearchAddressBtn active landRightsSearchBtn" id="basicSearchBtn">검색</button> -->
+                                        <button class="SearchAddressBtn active landRightsSearchBtn" id="basicSearchBtn">검색</button>
                                         
-                                        <!-- 버튼 테스트 -->
+                                        버튼 테스트
                                         
                                         <button class="SearchAddressBtn active landRightsSearchBtn" 
                                         		onclick="commonAddressSearchPopupOpen('jisang', 'landRightsRegistration', 'commonAddressPopupDiv')">검색2</button>
@@ -374,7 +377,8 @@
                                        
                                     </div>
                                 </li>
-                            </ul>
+                            </ul> -->
+                            
                         </div>
                     </div>
                 </section>

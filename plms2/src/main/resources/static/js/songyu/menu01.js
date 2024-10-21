@@ -566,7 +566,7 @@ function loadDataTable(params) {
 					console.log(data); // 서버에서 받아온 데이터 확인
 					var dataArr=[];
 					var head=['순번','담당지사','관로저촉','관경','시도','시군구','읍면동','리','지번','지목','소유자','면적','토지유형','권리확보','자산번호'
-					 ,'등기여부','겨약유형','취득일','점용기간','점용납부일','설정면적','설정연장','자산금액','납부금액'
+					 ,'관리번호','등기여부','겨약유형','취득일','점용기간','점용납부일','설정면적','설정연장','자산금액','납부금액'
 					 ,'PNU','등기/점용여부','계약/허가여부','이슈유형대분류','이슈유형중분류','이슈유형세분류','허가증보유여부','영구무상점유','소액미청구','점용료선납','선납기한'];
 					 dataArr.push(head);	
 					for(var i=0;i<data.length;i++){
@@ -589,7 +589,7 @@ function loadDataTable(params) {
 						
 						
 						var rowArr=[data[i].no,data[i].jisa,data[i].pipe_overlap_yn,data[i].pipe_meter,data[i].sido_nm,data[i].sgg_nm,data[i].emd_nm,data[i].ri_nm,data[i].jibun,data[i].jimok_text,data[i].souja_name,data[i].jijuk_area,togi_type,jisangStatus,data[i].jasan_no
-							,data[i].comple_yn,data[i].permitted_yn,data[i].chuideuk_date,pmtDate,data[i].pay_date,data[i].gover_area,data[i].gover_length,data[i].jasan_money,data[i].pay_money
+							,data[i].master_no ,data[i].comple_yn,data[i].permitted_yn,data[i].chuideuk_date,pmtDate,data[i].pay_date,data[i].gover_area,data[i].gover_length,data[i].jasan_money,data[i].pay_money
 							,data[i].pnu,data[i].registed_yn,data[i].permitted_yn,data[i].code_depth1_name,data[i].code_depth2_name,data[i].code_depth3_name,data[i].permpossyn,occunonpayreasonTitle1,occunonpayreasonTitle2,data[i].occuprepayyn,data[i].occuprepaydate];
 						dataArr.push(rowArr);	
 					}
