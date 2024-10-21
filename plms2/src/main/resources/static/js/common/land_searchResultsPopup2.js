@@ -353,8 +353,27 @@ function selectTargetAddress() {
 	searchTargetAddressInfo = searchTargetAddressAll[selectedIdx];
 	console.log(searchTargetAddressInfo);
 	
+	//모든걸 대비한다
 	$("#justone_commonAddrSearch_result").text(searchTargetAddressInfo.juso);
+	$("#justone_commonAddrSearch_result").val(searchTargetAddressInfo.juso);
 	$("#justone_commonAddrSearch_result_"+commonAddrTagIndex).text(searchTargetAddressInfo.juso);
+	
+	//지상권
+	
+	//점용
+	
+	//토지개발
+	
+	//회사토지
+	$("#justone_commonAddrSearch_result_goverownyn_btn").text(searchTargetAddressInfo.gover_own_yn);
+	$("#compLandRegSelectBox05").val(searchTargetAddressInfo.gover_own_yn);
+	$("#justone_commonAddrSearch_result_jimoktext_btn").text(searchTargetAddressInfo.jimok_text);
+	$("#compLandRegSelectBox06").val(searchTargetAddressInfo.jimok_text);
+	
+	
+	//이슈
+	
+	
 	
 	
 	commonAddressSearchPopupClose(); //선택하면 우선 닫기

@@ -227,9 +227,11 @@
 															  <!--행정구역-->
                                 <li class="content inputWrap">
                                     <div class="inputBox addressData">
-                                        <input name="addressData" type="text" th:value="${data.address}"/>
+                                        <input name="addressData" id="justone_commonAddrSearch_result" type="text" th:value="${data.address}"/>
                                     </div>
-                                    <button class="searchBtn">검색</button>
+                                    <button class="searchBtn" id="comon_langright_addrsearch" 
+                                    style="width: 100px; height: 40px;" 
+                                    onclick="commonAddressSearchPopupOpen('dopco', 'compLandEdit', 'commonAddressPopupDiv')">검색</button>
                                 </li>
                                 <li class="content selectContentArea">
                                     <div class="hiddenSelectBox">
@@ -240,7 +242,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView" th:text="${data.gover_own_yn}">Y/N</button>
+                                        <button class="customSelectView" id="justone_commonAddrSearch_result_goverownyn_btn" th:text="${data.gover_own_yn}">Y/N</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
@@ -259,7 +261,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox"> 
-                                        <button class="customSelectView" th:text="${data.jimok_text}">선택</button>
+                                        <button class="customSelectView" id="justone_commonAddrSearch_result_jimoktext_btn" th:text="${data.jimok_text}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>

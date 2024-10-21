@@ -605,8 +605,19 @@ $(document).on("click", ".registBtn", function () {
 	    /* var json = JSON.stringify(formSerializeArray);
 	        console.log("----------jsonobj------------");
 	        console.log(json); // JSON 문자열 출력*/
-	
+			
+			/*****주소검색 공통화 작업으로 인한 설정값 수정 241022 ******/
+			dataObj.sido_nm = searchTargetAddressInfo.sido_nm;
+			dataObj.sgg_nm = searchTargetAddressInfo.sgg_nm;
+			dataObj.emd_nm = searchTargetAddressInfo.emd_nm;
+			dataObj.ri_nm = searchTargetAddressInfo.ri_nm;
+			dataObj.jibun = searchTargetAddressInfo.jibun;
+			dataObj.pnu = searchTargetAddressInfo.pnu;
+			dataObj.addrcode = searchTargetAddressInfo.bcode;
+			/*************************************************/
+			
 	    url = "/land/dopco/insertDopcoList";
+			console.log(dataObj);
 	    $.ajax({
 	
 	        url: url,
@@ -645,6 +656,7 @@ $(document).on("click", ".registBtn", function () {
 	}
 });
 
+/* 주소 검색 공통 모듈 사용으로 변경
 $(document).on("click", ".searchBtn", function () {
     var addr = $(this).parent().find(".addressData input").val().trim();
     console.log(addr);
@@ -669,6 +681,7 @@ $(document).on("click", ".searchBtn", function () {
             //                               	$('.saveBtn').attr('data-index', id);
         });
 });
+*/
 
 $(document).on("click", ".topCloseBtn", function () {
     var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
