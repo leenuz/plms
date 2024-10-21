@@ -1064,7 +1064,7 @@ function toggleLineDisplay(value) {
   }
 }
 
-// '임시저장' 버튼 클릭 시, 폼 데이터를 로그로 출력
+// '임시저장' 버튼 클릭 시, 폼 데이터를 로그로 출력 - Q : 임시저장
 $(document).on("click", "#draftSaveBtn", function() {
 	
 	console.log("----masterEdit.js 임시저장 버튼 클릭----")
@@ -1238,7 +1238,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	object.fileCnt = files.length;
 	object.office_mobile = "";
 	object.save_status = "Q";//임시저장
-	object.gubun = "modify"; //신규등록
+	object.gubun = "modify"; //수정
 	
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
@@ -1410,29 +1410,190 @@ function getModifyReasonForLand() {
 // 승인 요청 버튼 - saveStatus 를 T:승인대기 로 update
 $(document).on("click", "#reqApprovalBtn", function() {
 
-	console.log("승인요청 버튼");
+	console.log("----masterEdit.js 승인요청 버튼 클릭----")
+	console.log($("#saveForm").serialize());
 
 	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
 	console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
 
 	var object = {}; // 빈 객체 생성
 	for (var i = 0; i < formSerializeArray.length; i++) {
+		if (formSerializeArray[i]['value'] === '전체' || formSerializeArray[i]['value'] ==='') {
+				    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+				}
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
 	}
 
-	object.saveStatus = "T";
-	object.goverNo = $('#gover_no').val();
-	object.groupNmPlms = $('#groupNmPlms').val();
+	// 변경이력 - 기본정보 처리
+	var modifyReason1 = getModifyReasonForBasicInfo();
+	console.log("----------------modifyReason1--------------");
+	console.log(modifyReason1);
+	if (modifyReason1 !== "") {
+		object.modifyReason1 = modifyReason1;
+	}
+
+	// 변경이력 - 허가관청만 처리 (필요 시 별도 함수로 분리 가능)
+	var modifyReason5 = compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청") +
+		compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
+	if (modifyReason5 !== "") {
+		object.modifyReason5 = modifyReason5;
+	}
+
+	// 소속 토지 정보 변경 이력 처리
+	var modifyReason2 = getModifyReasonForLand();
+	if (modifyReason2 !== "") {
+		console.log("소속토지정보 변경이력 있음: "+ modifyReason2);
+	  object.modifyReason2 = modifyReason2;
+	}
+
+	console.log("대상토지 정보");
+	var togiDatas = [];
+	var togiUls = $("#goverUlDiv #goverUl,#goverUl02");
+	console.log(togiUls);
+
+	/*String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
+						String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
+						String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
+						String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
+						String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
+						String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
+						String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
+						String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
+						String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
+						String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
+						String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
+						String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
+						String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
+						String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
+																										// "NULL"도*/
+	console.log("-----------------togiuls-----------------");
+	for (var i = 0; i < togiUls.length; i++) {
+		var sido_nm = $(togiUls[i]).find("input[name='sido_nm']").val();
+		var addKey = $(togiUls[i]).find("input[name='addKey']").val();
+		var sgg_nm = $(togiUls[i]).find("input[name='sgg_nm']").val();
+		var emd_nm = $(togiUls[i]).find("input[name='emd_nm']").val();
+		var ri_nm = $(togiUls[i]).find("input[name='ri_nm']").val();
+		var jibun = $(togiUls[i]).find("input[name='jibun']").val();
+		var jibun_full = $(togiUls[i]).find("input[name='jibun_full']").val();
+		var addrcode = $(togiUls[i]).find("input[name='addrcode']").val();
+		var pnu = $(togiUls[i]).find("input[name='pnu']").val();
+		var org_pnu = $(togiUls[i]).find("input[name='pnu']").val();
+		var gover_own_yn = $(togiUls[i]).find("#goverOwnYnBtn").text();
+		var jijuk_area = $(togiUls[i]).find("input[name='jijuk_area']").val();
+		var gover_length = $(togiUls[i]).find("input[name='gover_length']").val();
+		var gover_area = $(togiUls[i]).find("input[name='gover_area']").val();
+		var jimok_text = $(togiUls[i]).find("#jimok").text();
+		var adm_office = $(togiUls[i]).find("#admOfficeText01").text();
+		var pipe_overlab_yn = $(togiUls[i]).find("#pipeOverlapYnBtn").text();
+		/*console.log("jimok:"+jimok_text);
+					console.log($(togiUls[i]).find("#jimok").parent().html());
+		*/
+		var rep_flag = "N";
+		if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked") == true) {
+			rep_flag = "Y";
+		};
+
+		//console.log("togiManageNo:"+togiManageNo);
+		var togiObj = {
+			"sido_nm": ljsIsNull(sido_nm) ? '' : sido_nm
+			, "sgg_nm": ljsIsNull(sgg_nm) ? '' : sgg_nm
+			, "emd_nm": ljsIsNull(emd_nm) ? '' : emd_nm
+			, "ri_nm": ljsIsNull(ri_nm) ? '' : ri_nm
+			, "jibun_full": ljsIsNull(jibun_full) ? '' : jibun_full
+			, "jibun": ljsIsNull(jibun) ? '' : jibun
+			, "addrcode": ljsIsNull(addrcode) ? '' : addrcode
+			, "pnu": ljsIsNull(pnu) ? '' : pnu
+			, "org_pnu": ljsIsNull(org_pnu) ? '' : org_pnu
+			, "gover_own_yn": ljsIsNull(gover_own_yn) ? '' : gover_own_yn
+			, "jijuk_area": ljsIsNull(jijuk_area) ? '' : jijuk_area
+			, "gover_length": ljsIsNull(gover_length) ? '' : gover_length
+			, "jimok_text": ljsIsNull(jimok_text) ? '' : jimok_text
+			, "adm_office": ljsIsNull(adm_office) ? '' : adm_office
+			, "pipe_overlab_yn": ljsIsNull(pipe_overlab_yn) ? '' : pipe_overlab_yn
+			, "rep_flag": ljsIsNull(rep_flag) ? 'N' : rep_flag
+			, "gover_area": ljsIsNull(gover_area) ? '' : gover_area
+			, "addKey": addKey
+
+		}
+
+		console.log(togiObj);
+		togiDatas.push(togiObj);
+	}
+
+	//첨부파일 <====== 
+	//const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
+	console.log(attachFileUls);
+
+	var files = new Array();
+	let fileObj = {'ga_seq':'', 'ga_file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'ga_idx':''};
+	for (var i = 0; i < attachFileUls.length; i++) {
+		fileObj = {'ga_seq':'', 'ga_file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'ga_idx':''};
+		//console.log($(attachFileUls[i]).parent().parent().html());
+		let file_path = $(attachFileUls[i]).prev().val() || '';
+		let ga_idx = $(attachFileUls[i]).prev().prev().prev().prev().val() || '';
+		let ga_seq = $(attachFileUls[i]).prev().prev().prev().val() || '';
+		let ga_file_seq = $(attachFileUls[i]).prev().prev().val() || '';
+		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val() || '';
+		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val() || '';
+		let newFileCheckYn = $("input[name='newFileCheckYn']").eq(i).val();
+		console.log(file_path);
+		console.log(fname);
+		console.log(wdate);
+		fileObj.wdate = wdate;
+		fileObj.fname = fname;
+		fileObj.fpath = file_path;
+		fileObj.ga_seq = ga_seq;
+		fileObj.ga_idx = ga_idx;
+		fileObj.ga_file_seq = ga_file_seq;
+		fileObj.newFileCheckYn = newFileCheckYn;
+		files.push(fileObj);
+	}
+
+	console.log("----------togiDatas-------------");
+	console.log(togiDatas);
+	console.log("----------files-------------");
+	console.log(files);
+	object.occuprepayyn = $('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
+
+	object.pipe_name = $("#pipeNameText").text();
+
+
+	var tobj = $("#newregreasonBtn").text();
+	if (tobj == "선택") object.newregreason = "0";
+	else if (tobj.trim() == "사유지의 국유지 편입") object.newregreason = "1";
+	else if (tobj.trim() == "ILI결과 발견지번") object.newregreason = "2";
+
+	var tobj = $("#occunonpayreasonBtn").text();
+	if (tobj == "선택") object.occunonpayreason = "0";
+	else if (tobj.trim() == "영구 무상점용") object.occunonpayreason = "1";
+	else if (tobj.trim() == "소액 미청구") object.occunonpayreason = "2";
+	else if (tobj.trim() == "관할관청의 미청구") object.occunonpayreason = "3";
+
+
+	object.adm_office = $("#admOfficeText").text();
+	object.use_purpos=$("#usePurposBtn").text();
+	object.togiDatas = togiDatas;
+	object.files = files;
+	object.fileCnt = files.length;
+	object.office_mobile = "";
+	object.save_status = "T";//T:승인대기
+	object.gubun = "modify"; //수정
+
+	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
+	console.log("----------jsonobj------------");
 	console.log(object);
 
-	url = "/land/gover/updateGoverSaveStatus";
+	url = "/land/gover/insertGoverMasterDemo";
 	$.ajax({
 
 		url: url,
 		type: 'POST',
 		contentType: "application/json",
 		data: JSON.stringify(object),
-
 		dataType: "json",
 		beforeSend: function(request) {
 			console.log("beforesend ........................");
@@ -1443,16 +1604,14 @@ $(document).on("click", "#reqApprovalBtn", function() {
 			console.log(response);
 			if (response.success = "Y") {
 				console.log("response.success Y");
-				//console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
-				/*$("#popup_bg").show();
-				$("#popup").show(500);
-				//$("#addrPopupLayer tbody td").remove();
-				for(var i=0;i<response.resultData.length;i++){
-					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
-			}
-			else {
+				
+				//임시저장 버튼 또누를수 있으므로 정상적으로 저장 완료되면 첨부파일 속성들을 새파일이 아닌걸로 변경
+				for(let k = 0 ; k < $("input[name='newFileCheckYn']").length ; k++){
+					$("input[name='newFileCheckYn']").eq(k).val('N');
+				}
+				
+			} else {
 				console.log("response.success N");
 			}
 		},
@@ -1460,7 +1619,8 @@ $(document).on("click", "#reqApprovalBtn", function() {
 			alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
 			return false;
 		}
-	});
+	}); // end ajax
+
 })
 
 

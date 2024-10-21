@@ -874,7 +874,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 		 object.fileCnt=files.length;
 		 
 		 object.office_mobile="";
-		 object.save_status="Q";
+		 object.save_status="Q"; //Q: 임시저장
 			object.gubun="insert"; //신규등록
 	
     var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
@@ -1026,19 +1026,17 @@ $(document).on("click", "#requestBtn", function() {
 							files.push(fname);
 						}
 	   
-	     console.log("----------togiDatas-------------");
+	   console.log("----------togiDatas-------------");
 		 console.log(togiDatas);
 		 console.log("----------files-------------");
-		 	 console.log(files);
+		 console.log(files);
 			 
 		 object.togiDatas=togiDatas;
 		 object.files=files;
 		 object.fileCnt=files.length;
 		 object.office_mobile="";
-		 object.save_status="T";
-			object.gubun="insert"; //승인요청
-		
-
+		 object.save_status="T"; //승인요청
+		 object.gubun="insert"; //신규등록
 
 	  var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	  console.log("----------jsonobj------------");
